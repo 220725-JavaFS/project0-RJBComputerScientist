@@ -84,6 +84,7 @@ public class bankManagement {
 							if(choice == 1) {
 //								transfer money input logic
 								System.out.print("Enter Receiver A/C Number:");
+//								I could put down a list of people who have made an account
 								receiveAC = Integer.parseInt(sc.readLine());
 								System.out.println("Enter The Amount");
 								amt = Integer.parseInt(sc.readLine());
