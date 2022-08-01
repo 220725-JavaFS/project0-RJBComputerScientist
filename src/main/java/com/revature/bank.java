@@ -19,13 +19,16 @@ public class bank {
 		int AccountNumber;
 		int Choice;
 		
+//		TEST CODE
+		
+		
 		while(true) {
 			System.out.println("\n -->||		Welcome To Wanna Be Bank		||<--\n");
 			System.out.println("1) Create Account");
 			System.out.println("2) Login Account");
 			
 			try {
-				System.out.print("\n 		Enter Input:");
+				System.out.print("\n  Enter Input:\t");
 				Choice = Integer.parseInt(sc.readLine());
 				
 				switch(Choice) {
@@ -33,7 +36,7 @@ public class bank {
 					try {
 						System.out.print("Enter Unique Username:");
 						name = sc.readLine();
-						System.out.println("Enter Your New Password");
+						System.out.println("Enter Your New Pass Code:");
 						pass_code = Integer.parseInt(sc.readLine());
 						
 						if(bankManagement.createAccount(name, pass_code)) {
@@ -42,14 +45,14 @@ public class bank {
 							System.out.println("Account Creation Failed.. Boo Hoo");
 						}
 					} catch(Exception e) {
-						System.out.println("ERR: ERROR!!!! with process\nEnter Valid Data");
+						System.out.println(e);
 					}
 					break;
 				case 2:
 					try {
-						System.out.print("  Enter 	Username  ");
+						System.out.print("  Enter  Username:  ");
 						name = sc.readLine();
-						System.out.print("  Enter 	Username  ");
+						System.out.print("  Enter  Password:  ");
 						pass_code = Integer.parseInt(sc.readLine());
 						
 						if(bankManagement.loginAccount(name, pass_code)) {
@@ -65,16 +68,16 @@ public class bank {
 				default: 
 					System.out.println("Invalid Entry Of Operations");
 					
+				}
 				if(Choice == 5) {
 					System.out.println("Exited Successfully!\n\n	Remember To Give Us More Money MOO HAAA HAAAAA");
 					break;
-					}
 				}
 			} catch(Exception e) {
 				System.out.println("Enter Valid Entry!!!!!");
 			}
-			sc.close();
 		}
+		sc.close();
 	}
 
 }
