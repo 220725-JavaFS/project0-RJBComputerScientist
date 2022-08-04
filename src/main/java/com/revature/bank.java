@@ -27,8 +27,8 @@ public class bank {
 		
 		while(true) {
 			System.out.println("\n -->||		Welcome To Wanna Be Bank		||<--\n");
-			System.out.println("1) Create Account");
-			System.out.println("2) Login Account");
+			System.out.println("1) Create Customer Account");
+			System.out.println("2) Customer Login");
 			System.out.println("3) Admin Login");
 			System.out.println("4) Leave Bank");
 			
@@ -39,12 +39,12 @@ public class bank {
 				switch(Choice) {
 				case 1:
 					try {
-						System.out.print("Enter Unique Username:");
+						System.out.print("Enter Unique Username:\t");
 						name = sc.readLine();
-						System.out.println("Enter Your New Pass Code:");
+						System.out.println("Enter Your New Pass Code:\t");
 						pass_code = Integer.parseInt(sc.readLine());
 						
-						if(bankManagement.createAccount(name, pass_code)) {
+						if(bankManagement.customerCreateAccount(name, pass_code)) {
 							System.out.println("MSG: Account Created Successfully!\n");
 						} else {
 							System.out.println("Account Creation Failed.. Boo Hoo");
@@ -60,10 +60,10 @@ public class bank {
 						System.out.print("  Enter  Password:  ");
 						pass_code = Integer.parseInt(sc.readLine());
 						
-						if(bankManagement.loginAccount(name, pass_code)) {
+						if(bankManagement.customerLogin(name, pass_code)) {
 							System.out.println("Login Sucessful!\n");
 						} else {
-							System.out.println("ERR: login Failed!\n");
+							System.out.println("\nERR: login Failed!\n");
 						}
 					} catch(Exception e) {
 						System.out.println("Login Failed!! Try Again");
@@ -74,7 +74,7 @@ public class bank {
 						System.out.print(" 	Enter	Admin Code\t");
 						pass_code = Integer.parseInt(sc.readLine());
 						
-						if(bankManagement.adminAccount(pass_code)) {
+						if(bankManagement.adminLogin(pass_code)) {
 							System.out.println("Admin Login Successful");
 						} else {
 							System.out.println("ERROR!! Login Flopped!\n");
@@ -88,7 +88,7 @@ public class bank {
 					
 				}
 				if(Choice == 4) {
-					System.out.println("Exited Successfully!\n\n	Remember To Give Us More Money MOO HAAA HAAAAA");
+					System.out.println("Exited Successfully!\n\nRemember To Give Us More Money MOO HAAA HAAAAA");
 					break;
 				}
 			} catch(Exception e) {

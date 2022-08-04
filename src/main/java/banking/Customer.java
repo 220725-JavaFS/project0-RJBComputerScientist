@@ -52,6 +52,7 @@ public class Customer extends Human {
 	public ArrayList<Human> getCustomerAccounts(){
 		return DaCustomers;
 	}
+	
 //	^^^ Lists
 	
 }

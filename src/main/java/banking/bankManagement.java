@@ -46,7 +46,7 @@ public class bankManagement {
 	static Customer Customer = new Customer();
 //	^^^ adding the array of customers
 	
-	public static boolean createAccount(String name, int PassCode) {
+	public static boolean customerCreateAccount(String name, int PassCode) {
 		System.out.println("You Reached Me");
 		try {
 //			Validating if fields are filled
@@ -61,7 +61,7 @@ public class bankManagement {
 //			With a method
 			boolean Check = CheckingValidation(name, PassCode);
 			if(Check) {
-				System.out.println(" TRUE I'm In the check");
+				System.out.println("\nYou're creating an account, We'll give you money for opening an account");
 //				Customer NextCustomer = new Customer(Customer.LengthOfAccountNumbers(), 500, name);
 //				for(Customer x : Customer.getCustomers()) {
 //					if(PassCode == x.getAccount()) {
@@ -101,7 +101,10 @@ public class bankManagement {
 //		If the try fails completely 
 		
 	}
-	public static boolean loginAccount(String name, int PassCode) {
+	public static boolean customerLogin(String name, int PassCode) {
+/*		NOTES:
+ * 	Remember to add in the deposit and withdraw for customer login
+*/		
 		try {
 			boolean Check = CheckingValidation(name, PassCode);
 //			I will have a set of functions to use for admins and the owner (DONE)
@@ -173,7 +176,7 @@ public class bankManagement {
 	}
 	
 //	public static boolean adminAccount(int PassCode, Customers Customers) {
-	public static boolean adminAccount(int PassCode) {
+	public static boolean adminLogin(int PassCode) {
 		try {
 			if(PassCode == NULL) {
 				System.out.println("All Fields Required");
@@ -189,16 +192,18 @@ public class bankManagement {
 					System.out.println("1) View A Accounts");
 					System.out.println(PassCode == 1 ? "2) Change A Account"  :  "No Option");
 					System.out.println(PassCode == 1 ? "3) Delete A Account"  :  "No Option");
-					System.out.println("4) Go Back To Main Menu");
+					System.out.println(PassCode == 1 ? "4) Deposit To Any Account" : "No Option");
+					System.out.println(PassCode == 1 ? "5) Withdraw From Any Account" : "No Option");
+					System.out.println("6) Go Back To Main Menu");
 					choice = Integer.parseInt(BF.readLine());
+					ArrayList<Human> ListOfCustomers = Customer.getCustomerAccounts();
 					
 					if(choice == 1) {
 						System.out.println(PassCode == 1 ? 
 								"I'll be viewing the accounts as the Owner"
 								: "I'll be viewing your accounts as the admin");
 //						Customer[] ArrayOfCustomers = Customer.getCustomers();
-						ArrayList<Human> ArrayOfCustomers = Customer.getCustomerAccounts();
-						MenuOptions.PrintOutCustomers(ArrayOfCustomers);
+						MenuOptions.PrintOutCustomers(ListOfCustomers);
 					} else if(choice == 2 & PassCode == 1) {
 						System.out.println("What Account Number Do you want to change?");
 						AccountNumber = Integer.parseInt(BF.readLine());
@@ -210,10 +215,21 @@ public class bankManagement {
 						System.out.println("Which Account Would You Like To Delete?");
 						AccountNumber = Integer.parseInt(BF.readLine());
 //						Customer[] ArrayOfCustomers = Customer.getCustomers();
-						ArrayList<Human> ArrayOfCustomers = Customer.getCustomerAccounts();
-						MenuOptions.RemoveCustomer(AccountNumber, ArrayOfCustomers);
+						MenuOptions.RemoveCustomer(AccountNumber, ListOfCustomers);
+					} else if(choice == 4 & PassCode == 1) {
+						System.out.println("How Much Would You Like To Deposit");
+						amt = Integer.parseInt(BF.readLine());
+						System.out.println("Which Account Would You Like To Add Too?\t");
+						AccountNumber = Integer.parseInt(BF.readLine());
+						MenuOptions.Deposit(amt, AccountNumber, ListOfCustomers);
+					} else if (choice == 5 & PassCode == 1) {
+						System.out.println("How Much Would You Like To Withdraw");
+						amt = Integer.parseInt(BF.readLine());
+						System.out.println("Which Account Would You Like To Withdraw From?\t");
+						AccountNumber = Integer.parseInt(BF.readLine());
+						MenuOptions.Withdraw(amt, AccountNumber, ListOfCustomers);
 					}
-					if(choice == 4) {
+					if(choice == 6) {
 						System.out.println("\nLogOut & Back To Main Menu");
 						break;
 					}
@@ -243,10 +259,10 @@ public class bankManagement {
 			if(x.getAccount() == AccountNumber) {
 				ReturnedBalance = x.setBalance(balance);
 				System.out.println("You have changed: "+x.getName()+" Account Balance to this: "
-						+ ReturnedBalance);
+						+ ReturnedBalance+"\n");
 			} else {
 //				ReturnedBalance = DaCustomer.getBalance();
-				System.out.println("The system couldn' find that account number, No change has taken place");
+				System.out.println("The system couldn' find that account number, \nNo change has taken place");
 				}
 			}
 		return ReturnedBalance;
