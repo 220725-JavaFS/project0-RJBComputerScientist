@@ -4,10 +4,11 @@ package banking;
  * Admins are able to view all account numbers 
  * The Owner Overrides everything and can add and take money
  */
-public class Human {
+public abstract class Human {
 	protected String name;
 	protected int balance;
 	protected int AccountNumber;
+	
 	public Human(int AccountNumber, int balance, String name) {
 		super();
 		this.AccountNumber = AccountNumber;
@@ -31,20 +32,20 @@ public class Human {
 		return this.AccountNumber;
 	}
 	
-	public String setName(String name) {
-		return this.name = name;
+	public void setName(String name) {
+		 this.name = name;
 	}
 	
 	public int setBalance(int balance) {
 		return this.balance = balance;
 	}
 	
-	public int setAccount(int AccountNumber) {
-		return this.AccountNumber = AccountNumber;
+	public void setAccount(int AccountNumber) {
+		 this.AccountNumber = AccountNumber;
 	}
 	
 	public String toString() {
-		return("[Your Account Number Is -"+AccountNumber+", Your Human Name Is - "+
+		return("[Your Account Number Is - "+AccountNumber+", Your Human Name Is - "+
 				name+", Your Balance Is - "+balance+"]");
 	}
 

@@ -8,9 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class bankManagement {
 	private static final int NULL = 0;
+	private Customer[] Customers;
 	
 	static Connection con = (Connection) connection.getConnection();
 	static String sql = "";
@@ -28,10 +30,21 @@ public class bankManagement {
 //		Admins Admin1 = new Admins(0, 50, "Some Foo'");
 //		Owner ME = new Owner(1, 1000000000, "ME");
 		
-		Admins Admin1 = new Admins("Some Foo'");
-		Owner ME = new Owner("ME");
+//		Admins Admin1 = new Admins("Some Foo'");
+//		Owner ME = new Owner("ME");
+		
+		Admin Admins = new Admin(0);
+//		^^ with parameterized constructors using super
+		ArrayList<Human> Administrators = new ArrayList<Human>();
+		Administrators.add(new Admin(1));
+		Administrators.add(new Admin(11));
+		Admins.setAdminAccounts(Administrators);
 	}
-	static Customers[] SetOfCustomers;
+//	static Customer[] SetOfCustomers;
+// Use a Array List for adding and removing for testing START HERE (DONE)
+//	Also i will have different array list as well. Customers, Owner, Admins (DONE)
+	static Customer Customer = new Customer();
+//	^^^ adding the array of customers
 	
 	public static boolean createAccount(String name, int PassCode) {
 		System.out.println("You Reached Me");
@@ -42,13 +55,27 @@ public class bankManagement {
 //				return false;
 //			}
 //			TEST CODE
-			Customers NextCustomer = new Customers();
-			SetOfCustomers.push(Customers())
+//			Customers NextCustomer = new Customers();
+//			SetOfCustomers.push(Customers())
 			
 //			With a method
 			boolean Check = CheckingValidation(name, PassCode);
 			if(Check) {
 				System.out.println(" TRUE I'm In the check");
+//				Customer NextCustomer = new Customer(Customer.LengthOfAccountNumbers(), 500, name);
+//				for(Customer x : Customer.getCustomers()) {
+//					if(PassCode == x.getAccount()) {
+//						System.out.println(x.getAccount()+" Has Been Taken Already Try Again");
+//					}
+//				}
+				Customer NextCustomer = new Customer(PassCode, 500, name);
+//				Customer.setCustomers(NextCustomer, Customer.LengthOfAccountNumbers()+1);
+//				Customer.setCustomers(NextCustomer, 1);
+				Customer.AddAccount(NextCustomer);
+//				^^^ using the Array List
+				System.out.println("Here is Your New Account: "+NextCustomer.getName());
+				System.out.println(NextCustomer.toString());
+				return true;
 			} 
 //			querying the information to the database Serialization
 //			if(Check) {
@@ -143,6 +170,86 @@ public class bankManagement {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+//	public static boolean adminAccount(int PassCode, Customers Customers) {
+	public static boolean adminAccount(int PassCode) {
+		try {
+			if(PassCode == NULL) {
+				System.out.println("All Fields Required");
+				return false;
+			}
+			BufferedReader BF = new BufferedReader(new InputStreamReader(System.in));
+			int choice = 5;
+			int amt = 0;
+			int AccountNumber = 0;
+			while(true) {
+				try {
+					System.out.println(PassCode == 1 ? "Welcome Mr. Owner" : "Welcome Mrs. Admin");
+					System.out.println("1) View A Accounts");
+					System.out.println(PassCode == 1 ? "2) Change A Account"  :  "No Option");
+					System.out.println(PassCode == 1 ? "3) Delete A Account"  :  "No Option");
+					System.out.println("4) Go Back To Main Menu");
+					choice = Integer.parseInt(BF.readLine());
+					
+					if(choice == 1) {
+						System.out.println(PassCode == 1 ? 
+								"I'll be viewing the accounts as the Owner"
+								: "I'll be viewing your accounts as the admin");
+//						Customer[] ArrayOfCustomers = Customer.getCustomers();
+						ArrayList<Human> ArrayOfCustomers = Customer.getCustomerAccounts();
+						MenuOptions.PrintOutCustomers(ArrayOfCustomers);
+					} else if(choice == 2 & PassCode == 1) {
+						System.out.println("What Account Number Do you want to change?");
+						AccountNumber = Integer.parseInt(BF.readLine());
+						System.out.println("Whats The New Balance For The Account?");
+						amt = Integer.parseInt(BF.readLine());
+						ChangeCustomerAmount(AccountNumber, amt);
+					} 
+					if(choice == 3 & PassCode == 1) {
+						System.out.println("Which Account Would You Like To Delete?");
+						AccountNumber = Integer.parseInt(BF.readLine());
+//						Customer[] ArrayOfCustomers = Customer.getCustomers();
+						ArrayList<Human> ArrayOfCustomers = Customer.getCustomerAccounts();
+						MenuOptions.RemoveCustomer(AccountNumber, ArrayOfCustomers);
+					}
+					if(choice == 4) {
+						System.out.println("\nLogOut & Back To Main Menu");
+						break;
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	private static int ChangeCustomerAmount(int AccountNumber, int balance) {
+		int ReturnedBalance = 0;
+//		for(int x = 0; x < Customer.getCustomerAccounts().size(); ++x) {
+//		if(Customer.getCustomerAccounts().get(x) == AccountNumber) {
+//			ReturnedBalance = Customer.setBalance(balance);
+//			System.out.println("You have changed: "+Customer.getName()+" Account Balance to this: "
+//					+ ReturnedBalance);
+//		} else {
+////			ReturnedBalance = DaCustomer.getBalance();
+//			System.out.println("The system couldn' find that account number, No change has taken place");
+//			}
+//		}
+		for(Human x : Customer.getCustomerAccounts()) {
+			if(x.getAccount() == AccountNumber) {
+				ReturnedBalance = x.setBalance(balance);
+				System.out.println("You have changed: "+x.getName()+" Account Balance to this: "
+						+ ReturnedBalance);
+			} else {
+//				ReturnedBalance = DaCustomer.getBalance();
+				System.out.println("The system couldn' find that account number, No change has taken place");
+				}
+			}
+		return ReturnedBalance;
 	}
 	
 	protected static boolean transferMoney(int senderAC, int receiverAC, int amount) throws SQLException {
