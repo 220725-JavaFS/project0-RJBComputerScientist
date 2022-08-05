@@ -8,6 +8,7 @@ public abstract class Human {
 	protected String name;
 	protected int balance;
 	protected int AccountNumber;
+	protected int pass_code;
 	
 	public Human(int AccountNumber, int balance, String name) {
 		super();
