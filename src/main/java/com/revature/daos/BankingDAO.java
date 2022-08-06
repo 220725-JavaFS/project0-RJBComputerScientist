@@ -1,5 +1,7 @@
 package com.revature.daos;
 
+import java.util.List;
+
 import banking.Customer;
 import banking.Human;
 
@@ -7,6 +9,8 @@ import banking.Human;
 public interface BankingDAO {
 	
 	public Customer getCustomerById(int id);
+	
+	List<Customer> getAllCustomers();
 	
 	
 }
