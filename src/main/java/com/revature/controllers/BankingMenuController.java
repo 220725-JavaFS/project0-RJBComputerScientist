@@ -5,7 +5,7 @@ import java.util.Scanner;
 import com.revature.services.BankingService;
 
 import banking.Customer;
-
+// to display the information
 public class BankingMenuController {
 	private BankingService bankingService = new BankingService();
 	private Scanner scan = new Scanner(System.in);

@@ -19,6 +19,7 @@ public class Customer extends Human {
 		int TotalAccounts = 0;
 		for(int x = 0; x <= AllCustomers.length; x++) {
 			TotalAccounts = AllCustomers[x].getAccount();
+//			logic should be different .. this is a only getting the last customers account number
 		}
 		return TotalAccounts;
 	}

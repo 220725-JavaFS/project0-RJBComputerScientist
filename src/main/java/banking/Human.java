@@ -9,12 +9,14 @@ public abstract class Human {
 	protected int balance;
 	protected int AccountNumber;
 	protected int pass_code;
+//	pass_code
 	
 	public Human(int AccountNumber, int balance, String name) {
 		super();
 		this.AccountNumber = AccountNumber;
 		this.balance = balance;
 		this.name = name;
+//		pass_code
 	}
 	
 	public Human() {
@@ -47,7 +49,7 @@ public abstract class Human {
 	
 	public String toString() {
 		return("[Your Account Number Is - "+AccountNumber+", Your Human Name Is - "+
-				name+", Your Balance Is - "+balance+"]");
+				name+", Your Balance Is - "+balance+"]\n");
 	}
 
 }
