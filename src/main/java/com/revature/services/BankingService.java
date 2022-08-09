@@ -1,5 +1,7 @@
 package com.revature.services;
 
+import java.util.List;
+
 import com.revature.daos.BankingDAO;
 import com.revature.daos.BankingDAOImpl;
 
@@ -23,7 +25,8 @@ public class BankingService {
 	}
 	
 	public void getCustomerBalance(int ID) {
-		bankingdao.getCustomerBalance(ID);
+		System.out.println("Here Is Your Balance "+bankingdao.getCustomerBalance(ID));
+//		bankingdao.getCustomerBalance(ID);
 	}
 	
 	public void customerDeposit(int ID, int balance) {
@@ -34,7 +37,11 @@ public class BankingService {
 		bankingdao.Withdraw(ID, balance);
 	}
 	
-	public void RemoveDelete(int ID) {
+	public void RemoveCustomer(int ID) {
 		bankingdao.deleteCustomer(ID);
+	}
+	
+	public List<Customer> AllCustomers(){
+		return bankingdao.getAllCustomers();
 	}
 }

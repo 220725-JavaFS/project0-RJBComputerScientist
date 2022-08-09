@@ -1,12 +1,6 @@
 package com.revature.controllers;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.List;
 import java.util.Scanner;
 
 import com.revature.services.BankingService;
@@ -19,9 +13,9 @@ public class BankingMenuController {
 	private Scanner scan = new Scanner(System.in);
 	
 	/*
-	 * 1. ADD WELCOME MENU HERE
-	 * 2. ADD MENUS INSIDE OF WELCOME SCREEN
-	 * 3. ADD "AddCustomer" INSIDE OF CUSTOMER MENU
+	 * 1. ADD WELCOME MENU HERE (DONE)
+	 * 2. ADD MENUS INSIDE OF WELCOME SCREEN (DONE)
+	 * 3. ADD "AddCustomer" INSIDE OF CUSTOMER MENU (DONE)
 	 */
 	
 //	WELCOME MENU
@@ -59,10 +53,19 @@ public class BankingMenuController {
 		}
 	}
 
+//	TESTING METHOD
+	private Admin Login(Admin admin) {
+		return bankingService.adminLogin(admin);
+	}
 	
 	private void AdminMenu() {
 		String choice = "";
+//		ADMIN LOGIN HERE
+//		1. admin
+//		2. method(admin)
+//		3. admin.Name
 		menuLoop: while(!choice.equals("0")) {
+//			^^ doubling logic
 		System.out.println("How Would You Proceed At Customer View?"
 				+ "\n 0. Exit"
 				+ "\n 1. View Account"
@@ -75,7 +78,7 @@ public class BankingMenuController {
 		choice = scan.nextLine();
 		switchChoice: switch(choice) {
 		case "0":
-			break switchChoice;
+			break menuLoop;
 			case "1":
 				System.out.println("You Picked View Account");
 				seeCustomers();
@@ -96,7 +99,7 @@ public class BankingMenuController {
 		}
 	}
 
-//	FOR ADMINS
+//	ADMINS METHODS/FUNCTIONS START
 	private void seeCustomers() {
 		String Answer = "";
 		while(!Answer.equalsIgnoreCase("exit")) {
@@ -106,6 +109,8 @@ public class BankingMenuController {
 		
 		if(Answer.equalsIgnoreCase("all")) {
 //			Get All Customers
+			List<Customer> ListOfCustomers = bankingService.AllCustomers();
+			System.out.println("Here Are All Of The Customers: \n"+ListOfCustomers);
 		} else if(Answer.equalsIgnoreCase("exit")){
 			return;
 		} else {
@@ -123,6 +128,7 @@ public class BankingMenuController {
 		}
 	}
 	
+//	ADMINS METHODS/FUNCTIONS END
 	private void CustomerMenu() {
 //		System.out.println("Customer Menu");
 //		System.out.println("Whats Your Login Information?");
@@ -154,25 +160,29 @@ public class BankingMenuController {
 				break menuLoop;
 				case "1":
 					System.out.println("You Picked View Account");
+					getCustomerBalance();
 					break switchChoice;
 				case "2":
 					System.out.println("You Picked Deposit Account");
-					
+					AddMonies();
 					break switchChoice;
 				case "3":
 					System.out.println("You Picked Withdraw Account");
+					SubtractMonies();
 					break switchChoice;
 				case "4":
 					System.out.println("You Picked Transfer Account");
+					MoneyTransfer();
 					break switchChoice;
 				case "5":
 					System.out.println("You Picked Delete Account");
+					DeleteCustomer();
 					break switchChoice;
 			}
 		}
 		
 	}
-	
+//	CUSTOMER METHODS/FUNCTIONS START
 	private void CreateCustomer() {
 		Customer customer = new Customer();
 		System.out.println("Whats Your name?");
@@ -204,15 +214,31 @@ public class BankingMenuController {
 	}
 	
 	private void AddMonies() {
-		
+		int ID, balance;
+		System.out.println("Whats Your Account ID");
+		ID = Integer.parseInt(scan.nextLine());
+		System.out.println("Whats The Amount You Want To Add?");
+		balance = Integer.parseInt(scan.nextLine());
+		bankingService.customerDeposit(ID, balance);
 	}
 	
 	private void SubtractMonies() {
-		
+//		I would include a verification method for this method
+		int ID, balance;
+		System.out.println("Whats Your Account ID");
+		ID = Integer.parseInt(scan.nextLine());
+		System.out.println("Whats The Amount You Want To Subtract?");
+		balance = Integer.parseInt(scan.nextLine());
+		bankingService.customerWithdraw(ID, balance);
 	}
 	
 	private void DeleteCustomer() {
-		
+//		I would include a verification method for this method
+		int ID;
+		System.out.println("Which Account ID Would You Want To Delete?");
+		ID = Integer.parseInt(scan.nextLine());
+		bankingService.RemoveCustomer(ID);
 	}
 	
+//	CUSTOMER METHODS/FUNCTIONS END
 }

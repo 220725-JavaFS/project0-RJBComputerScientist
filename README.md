@@ -1,6 +1,8 @@
 MY ADDED NOTES OF THE CONSOLE BASED APPLICATION
 - Edited On 8/3/2022
 - Locally works without a database 8/3/2022
+- Connected to a Database 8/1/2022
+- Finished Main Funcitons of the application 8/9/2022
 
 # Project 0
 

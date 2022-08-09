@@ -142,31 +142,23 @@ public class BankingDAOImpl implements BankingDAO{
 		return false;
 	}
 	
-	public void getCustomerBalance(int ID) {
-		try(Connection con = ConnectionUtils.getConnection()) {
-		sql = "select * from customer where AccountNumber=" + ID;
-		PreparedStatement st = con.prepareStatement(sql);
-		ResultSet rs = st.executeQuery(sql);
-		System.out.println(
-				"----------------------------------------------------------"
-				);
-		System.out.printf("%12s %10s % 10s\n",
-				"Account Number", "Name", "Balance");
-//		Execution 
-		while(rs.next()) {
-//			Factoring the information
-			System.out.printf("%12d %10s %10d.00\n", 
-					rs.getInt("AccountNumber"),
-					rs.getString("Cname"),
-					rs.getInt("balance")
-					);
+	public int getCustomerBalance(int ID) {
+		try (Connection con = ConnectionUtils.getConnection()){
+			String sql = "select * from customer where AccountNumber = "+ID+";";
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			if(rs.next()) { 
+				Customer customer = new Customer(
+						rs.getInt("AccountNumber"),
+						rs.getInt("balance"),
+						rs.getString("Cname")
+						);
+				return customer.getBalance();
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
 		}
-		System.out.println(
-				"----------------------------------------------------------\n"
-				);
-	} catch(SQLException e) {
-		e.printStackTrace();
-	}
+		return 0;
 	}
 	
 	@Override
@@ -227,25 +219,25 @@ public class BankingDAOImpl implements BankingDAO{
 		}
 	}
 	
-	public Customer deleteCustomer(int ID) {
+	public void deleteCustomer(int ID) {
 		try(Connection con = ConnectionUtils.getConnection()) {
 			sql = "delete from customer where AccountNumber="+ID+";";
 			PreparedStatement ps = con.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery();
-			Customer customer = new Customer();
-			if(rs.next()) {
-				int Database_Balance = rs.getInt("balance");
-				customer.setAccount(rs.getInt("AccountNumber"));
-				customer.setBalance(Database_Balance);
-				customer.setName(rs.getString("Cname"));
-				System.out.println(customer.getName()+" Was Deleted");
-				return customer;
-			}
+			ps.execute();
+			System.out.println("You Deleted Account Number "+ID);
+//			Customer customer = new Customer();
+//			if(rs.next()) {
+////				int Database_Balance = rs.getInt("balance");
+////				customer.setAccount(rs.getInt("AccountNumber"));
+////				customer.setBalance(Database_Balance);
+////				customer.setName(rs.getString("Cname"));
+////				return customer;
+//			}
 		
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+//		return null;
 	}
 	
 /*

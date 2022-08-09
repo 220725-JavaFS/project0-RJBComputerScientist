@@ -331,5 +331,6 @@ public class bankManagement {
 			e.printStackTrace();
 		}
 	}
+//	^^^ BROKEN CODE .. Can't use query methods that take a query string on a PreparedStatement.
 	
 }

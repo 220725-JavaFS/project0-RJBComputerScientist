@@ -2,6 +2,7 @@ package com.revature.daos;
 
 import java.util.List;
 
+import banking.Admin;
 import banking.Customer;
 import banking.Human;
 
@@ -16,12 +17,17 @@ public interface BankingDAO {
 	
 	boolean transferMoney(int senderAC, int receiverAC, int amount);
 	
-	void getCustomerBalance(int ID);
+	int getCustomerBalance(int ID);
 	
 	void Deposit(int ID, int balance);
 	
 	void Withdraw(int ID, int balance);
 	
-	Customer deleteCustomer(int id);
+//	Customer deleteCustomer(int id);
+	void deleteCustomer(int id);
+	
+	Admin AdminLogin(Admin admin);
+	
+	Customer CustomerLogin(Customer customer);
 	
 }
