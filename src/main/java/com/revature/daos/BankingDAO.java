@@ -14,4 +14,14 @@ public interface BankingDAO {
 	
 	public abstract Customer insertCustomer(Customer customer);
 	
+	boolean transferMoney(int senderAC, int receiverAC, int amount);
+	
+	void getCustomerBalance(int ID);
+	
+	void Deposit(int ID, int balance);
+	
+	void Withdraw(int ID, int balance);
+	
+	Customer deleteCustomer(int id);
+	
 }

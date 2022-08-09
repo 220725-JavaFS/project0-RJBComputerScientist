@@ -16,7 +16,14 @@ public abstract class Human {
 		this.AccountNumber = AccountNumber;
 		this.balance = balance;
 		this.name = name;
-//		pass_code
+	}
+	
+	public Human(int AccountNumber, int balance, String name, int pass_code) {
+		super();
+		this.AccountNumber = AccountNumber;
+		this.balance = balance;
+		this.name = name;
+		this.pass_code = pass_code;
 	}
 	
 	public Human() {
@@ -35,6 +42,10 @@ public abstract class Human {
 		return this.AccountNumber;
 	}
 	
+	public int getPassCode() {
+		return this.pass_code;
+	}
+	
 	public void setName(String name) {
 		 this.name = name;
 	}
@@ -45,6 +56,10 @@ public abstract class Human {
 	
 	public void setAccount(int AccountNumber) {
 		 this.AccountNumber = AccountNumber;
+	}
+	
+	public int setPassCode(int pass_code) {
+		return this.pass_code = pass_code;
 	}
 	
 	public String toString() {
