@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS administrator;
 CREATE TABLE administrator (
 	AdminNumber serial NOT NULL,
 	Aname varchar(45) DEFAULT null unique,
-	pass_code int DEFAULT NULL
+	pass_code int DEFAULT null
 );
 
 alter table administrator add constraint pk_ad primary key (AdminNumber, Aname);
@@ -25,6 +25,6 @@ INSERT INTO administrator (AdminNumber, Aname, pass_code) VALUES
 (DEFAULT, 'admin One', 2);
 
 -- FOR TESTING AND CLONED DATABASE STRUCTURE
---INSERT INTO customer  (AccountNumber, Cname, pass_code) VALUES 
---(default, 'Customer 1', 1),
---(DEFAULT, 'Customer 2', 2);
+INSERT INTO customer  (AccountNumber, Cname, balance, pass_code) VALUES 
+(default, 'Customer 1', 10, 100),
+(DEFAULT, 'Customer 2', 20, 101);

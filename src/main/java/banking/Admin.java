@@ -6,6 +6,7 @@ public class Admin extends Human {
 	
 	private String AdminName;
 	protected int AdminID;
+	protected int PassCode;
 	
 	private Customer[] Accounts;
 	private ArrayList<Human> AdminAccounts = new ArrayList<Human>();
@@ -13,6 +14,14 @@ public class Admin extends Human {
 	public Admin(int AccountNumber, int balance, String name) {
 		super(AccountNumber, balance, name);
 	}
+//	^^ from memory .. testing
+	
+	public Admin(int AdminNumber, String Aname, int PassCode) {
+		this.AdminID = AdminNumber;
+		this.AdminName = Aname;
+		this.PassCode = PassCode;
+	}
+//	^^ for database
 	
 	public int getAdminID() {
 		return AdminID;
@@ -29,6 +38,10 @@ public class Admin extends Human {
 //	public Admins() {
 //		super();
 //	}
+	
+	public Admin() {
+		
+	}
 
 	public Customer[] getAccounts() {
 		return Accounts;

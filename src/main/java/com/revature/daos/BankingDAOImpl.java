@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.revature.util.ConnectionUtils;
 
+import banking.Admin;
 import banking.Customer;
 import banking.Human;
 // SQL (PostgreSQL) implementation
@@ -250,6 +251,34 @@ public class BankingDAOImpl implements BankingDAO{
 		} else {
 			return true;
 		}
+	}
+
+	@Override
+	public Admin AdminLogin(Admin admin) {
+//		I will change the admin login logic to be more authenticated later
+//		logic isnt working
+		try (Connection con = ConnectionUtils.getConnection()){
+			String sql = "select * from administrator where AdminNumber="+admin.getAccount();
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(sql);
+			if(rs.next()) { 
+				Admin Returnedadmin = new Admin(
+						rs.getInt("AdminNumber"),
+						rs.getString("Aname"),
+						rs.getInt("pass_code")
+						);
+				return Returnedadmin;
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public Customer CustomerLogin(Customer customer) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

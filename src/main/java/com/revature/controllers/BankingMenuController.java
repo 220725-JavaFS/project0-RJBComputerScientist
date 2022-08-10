@@ -5,12 +5,15 @@ import java.util.Scanner;
 
 import com.revature.services.BankingService;
 
+import banking.Admin;
 import banking.Customer;
 import banking.bankManagement;
 // to display the information
 public class BankingMenuController {
 	private BankingService bankingService = new BankingService();
 	private Scanner scan = new Scanner(System.in);
+	Admin admin = new Admin();
+	Customer customer = new Customer();
 	
 	/*
 	 * 1. ADD WELCOME MENU HERE (DONE)
@@ -29,6 +32,7 @@ public class BankingMenuController {
 			System.out.println("0) Leave Bank");
 			System.out.println("1) Customer Menu");
 			System.out.println("2) Admin Menu");
+//			System.out.println("3) TEST ADMIN LOGIN Menu");
 			
 			try {
 				System.out.print("\n  What Menu Are You Using?:\t");
@@ -44,6 +48,9 @@ public class BankingMenuController {
 				case "2":
 					AdminMenu();
 					break switchChoice;
+//				case "3":
+//					TestLogin();
+//					break switchChoice;
 				default: 
 					System.out.println("That Aint A Choice");
 				}
@@ -54,9 +61,20 @@ public class BankingMenuController {
 	}
 
 //	TESTING METHOD
-	private Admin Login(Admin admin) {
-		return bankingService.adminLogin(admin);
-	}
+//	private void TestLogin() {
+////		return bankingService.adminLogin(admin);
+////		^^^ AdminLogin down below
+////		ADMIN LOGIN HERE
+////		1. admin
+////		2. method(admin)
+////		3. admin.Name
+//		System.out.println("admin "+admin);
+//		AdminLogin();
+//		System.out.println("admin name "+admin.getName());
+//		System.out.println("admin number "+admin.getAdminID());
+//		System.out.println("admin passcode "+admin.getPassCode());
+//		System.out.println("admin "+admin);
+//	}
 	
 	private void AdminMenu() {
 		String choice = "";
@@ -64,9 +82,13 @@ public class BankingMenuController {
 //		1. admin
 //		2. method(admin)
 //		3. admin.Name
+		if(admin.getName() == null) {			
+			AdminLogin();
+		}
+		
 		menuLoop: while(!choice.equals("0")) {
 //			^^ doubling logic
-		System.out.println("How Would You Proceed At Customer View?"
+		System.out.println("How Would You Proceed "+ admin.getName() + "?"
 				+ "\n 0. Exit"
 				+ "\n 1. View Account"
 				+ "\n 2. Deposit Account"
@@ -80,20 +102,24 @@ public class BankingMenuController {
 		case "0":
 			break menuLoop;
 			case "1":
-				System.out.println("You Picked View Account");
+				System.out.println(admin.getName() +" You Picked View Account");
 				seeCustomers();
 				break switchChoice;
 			case "2":
-				System.out.println("You Picked Deposit Account");
+				System.out.println(admin.getName() +" You Picked Deposit Account");
+				AddMonies();
 				break switchChoice;
 			case "3":
-				System.out.println("You Picked Withdraw Account");
+				System.out.println(admin.getName() +" You Picked Withdraw Account");
+				SubtractMonies();
 				break switchChoice;
 			case "4":
-				System.out.println("You Picked Transfer Account");
+				System.out.println(admin.getName() +" You Picked Transfer Account");
+				MoneyTransfer();
 				break switchChoice;
 			case "5":
-				System.out.println("You Picked Delete Account");
+				System.out.println(admin.getName() +" You Picked Delete Account");
+				DeleteCustomer();
 				break switchChoice;
 		}
 		}
@@ -144,8 +170,17 @@ public class BankingMenuController {
 //		System.out.print(Choice+Username+PassCode);
 //		^^^^ login
 //		Customer LoggedCustomer = new Customer()
+		
+		if(customer.getName() == null) {
+			CustomerLogin();
+		} else {
+			System.out.println(customer.getName()+" Want To Make Another Account??");
+			Choice = scan.nextLine();
+			if(Choice.equalsIgnoreCase("YES"))
+				CreateCustomer();
+		}
 		menuLoop: while(true) {
-			System.out.println("Hey, How Would You Like To Proceed At Customer View?"
+			System.out.println("Hey "+customer.getName()+", How Would You Like To Proceed?"
 					+ "\n 0. Exit"
 					+ "\n 1. View Account"
 					+ "\n 2. Deposit Account"
@@ -159,23 +194,23 @@ public class BankingMenuController {
 				System.out.println("Back To Welcome Menu");
 				break menuLoop;
 				case "1":
-					System.out.println("You Picked View Account");
+					System.out.println("You Picked View Account "+customer.getName());
 					getCustomerBalance();
 					break switchChoice;
 				case "2":
-					System.out.println("You Picked Deposit Account");
+					System.out.println("You Picked Deposit Account "+customer.getName());
 					AddMonies();
 					break switchChoice;
 				case "3":
-					System.out.println("You Picked Withdraw Account");
+					System.out.println("You Picked Withdraw Account "+customer.getName());
 					SubtractMonies();
 					break switchChoice;
 				case "4":
-					System.out.println("You Picked Transfer Account");
+					System.out.println("You Picked Transfer Account "+customer.getName());
 					MoneyTransfer();
 					break switchChoice;
 				case "5":
-					System.out.println("You Picked Delete Account");
+					System.out.println("You Picked Delete Account "+customer.getName());
 					DeleteCustomer();
 					break switchChoice;
 			}
@@ -184,8 +219,7 @@ public class BankingMenuController {
 	}
 //	CUSTOMER METHODS/FUNCTIONS START
 	private void CreateCustomer() {
-		Customer customer = new Customer();
-		System.out.println("Whats Your name?");
+		System.out.println("Whats The Name For This Account?");
 		customer.setName(scan.nextLine());
 		System.out.println("How Many Monies Do You?");
 		customer.setBalance(Integer.parseInt(scan.nextLine()));
@@ -241,4 +275,30 @@ public class BankingMenuController {
 	}
 	
 //	CUSTOMER METHODS/FUNCTIONS END
+	
+//	LOGINS
+	private void AdminLogin() {
+//		System.out.println("All admins will have only one account!\n"+"Whats Your Account ID");
+//		admin.setAccount(Integer.parseInt(scan.nextLine()));
+//		bankingService.AdminLogin(admin);
+//		This WIll Be all memory for now
+		System.out.println("Hello admin, Whats Your name?");
+		admin.setName(scan.nextLine());
+		System.out.println("Whats Your Pass Code?");
+		admin.setPassCode(Integer.parseInt(scan.nextLine()));
+	}
+	
+	private void CustomerLogin() {
+		String choice = "";
+		System.out.println("HEY WELCOME, Want to make a new account?");
+		choice = scan.nextLine();
+		if(choice.equalsIgnoreCase("yes")) {
+			CreateCustomer();
+		} else {
+		System.out.println("OK OK, Whats Your name?");
+		customer.setName(scan.nextLine());
+		System.out.println("Whats Your Pass Code?");
+		customer.setPassCode(Integer.parseInt(scan.nextLine()));
+		}
+	}
 }
