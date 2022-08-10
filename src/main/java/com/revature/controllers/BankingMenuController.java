@@ -90,7 +90,7 @@ public class BankingMenuController {
 //			^^ doubling logic
 		System.out.println("How Would You Proceed "+ admin.getName() + "?"
 				+ "\n 0. Exit"
-				+ "\n 1. View Account"
+				+ "\n 1. View Customer Accounts"
 				+ "\n 2. Deposit Account"
 				+ "\n 3. Withdraw Account"
 				+ "\n 4. Transfer Account"
