@@ -17,7 +17,7 @@ public class bankManagement {
 	static Connection con = (Connection) connection.getConnection();
 	static String sql = "";
 	
-	private static boolean CheckingValidation(String name, int PassCode) {
+	static boolean CheckingValidation(String name, int PassCode) {
 		if(name == "" || PassCode == NULL) {
 			System.out.println("All Fields Required");
 			return false;
